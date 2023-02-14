@@ -22,10 +22,10 @@ body{
 
 hr{
     width: 15%;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     border-style: dotted none none;
-    border-width: 13px;
+    border-width: 10px;
     color: #6A994E;
 }
 
@@ -46,17 +46,27 @@ h2{
     text-align: center;
 }
 
-.center_image{
+.imageLink{
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
+    width:70%;
+    text-align: center;
+}
+
+.center_image{
+    display:block;
+    margin:auto;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    text-align: center;
 }
 
 .mainBody{
     background-color: #bbd879;
     position: relative;
     border-radius: 20px;
-    padding: 5px 10px 5px 10px;
+    padding: 5px 15px 5px 15px;
     width: 80%;
     margin:auto;
     border-style: solid;
