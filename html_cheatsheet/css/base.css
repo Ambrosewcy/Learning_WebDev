@@ -50,6 +50,10 @@ h2{
     text-align: center;
 }
 
+.inline{
+    display: inline-block;
+}
+
 .no_padding{
     padding: 0px;
 }
@@ -93,7 +97,6 @@ h2{
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-
     list-style: none;
 }
 
