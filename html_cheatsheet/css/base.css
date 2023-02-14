@@ -50,6 +50,18 @@ h2{
     text-align: center;
 }
 
+.no_padding{
+    padding: 0px;
+}
+
+.no_margin{
+    margin: 0px;
+}
+
+.strong{
+    font-weight: 700;
+}
+
 .imageLink{
     display: block;
     margin: auto;
@@ -75,4 +87,35 @@ h2{
     margin:auto;
     border-style: solid;
     border-color: #6A994E;
+}
+
+.flex_row{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+
+    list-style: none;
+}
+
+.flex_table_cell{
+    flex: 1 1 5%;
+    word-wrap: break-word;
+    margin: 0px 3px 0px 3px;
+    padding: 3px;
+    border: solid;
+    border-color: #6A994E;
+    border-radius: 3px;
+}
+
+.flex_codesnip_item{
+    background-color: #252627;
+    flex: 1 1 100px;
+    word-wrap: break-word;
+    font-family: 'Share Tech Mono', monospace;
+    margin: 0px 3px 0 3px;
+    color: white;
+    font-size: 0.8em;
+    max-width: 500px;
+    padding: 2px;
+    padding-left: 1em;
 }

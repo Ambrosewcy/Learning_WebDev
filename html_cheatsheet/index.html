@@ -7,8 +7,12 @@
         <title>Ambrose HTML Cheatsheet</title>
         <link rel="stylesheet" href="css/base.css">
         <link rel="icon" href="favicon.ico">
-    </head>
 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    </head>
+<!-- SIMPLE HTML MARKUP-->
     <body>
         <h1 id="_html_markup">
             Simple HTML Markup
@@ -19,7 +23,7 @@
             <p>By using tags to mark objects, browser application can determine what and how to interact or display the object</p>
             <p>The html file acts as the base structure of a website, which can then be decorated with CSS for styling or Javascript for interactability</p>
         </div><hr>
-
+<!-- COMMON HTML TAGS-->
         <div class="mainBody">
             <h2>Common HTML Tags</h2>
             <p>&lt h1 - 6 &gt - Denotes object as headers from largest to small</p>
@@ -38,8 +42,8 @@
             <p>&lt div &gt - Marks object as a divison of the page. To be used in conjunction with css classes for styling</p>
             <p>&lt span &gt - Marks object as a span within a parent block for use for css styling.</p>
             <p>&lt style &gt - Marks object as items used for internal CSS styling</p>
-            <p>style - keyword to mark inline css styling in another html tag.</p> 
         </div><hr>
+<!-- INTRO TO CSS -->
         <div class="mainBody">
             <h2 class="center" id="_css_intro">Intro CSS</h2>
             <p>
@@ -48,11 +52,75 @@
                 Thus, introducing Cascading Styling Sheets(CSS), allowing us to style the content of our website.<br>
             </p>
             <img src="images/cssSyntax.png" alt="Css Syntax" class="center_image" style="max-width: 256px;">
-                -types of css<br>
-                -Syntax<br>
-                -classes and id's<br>
+            <p>
+                To style html tags, use specify a <span class="strong">selector</span> such as h1, body, p or even define your own classes or ids.
+                Then within the brackets define a <span class="strong">property</span> and assign it a <span class="strong">value</span>.
+                As an example, to select p tag and mark it with background color of white, use p{background-color: white;}
+            </p>
+            <p>
+                CSS can be specified into your html file in 3 ways.
+                <ul class="flex_row">
+                    <li class="flex_table_cell">
+                        <p class="center strong no_padding no_margin">
+                            - Inline -
+                        </p>
+                        <p>
+                            Defined within tag declaration<br><br>
+                            &ltp style="background-color: black;"&gt
+                        </p>
+                    </li>
+                    <li class="flex_table_cell">
+                        <p class="center strong no_padding no_margin">
+                            - Internal -
+                        </p>
+                        <p>
+                            Defined in same file as html<br><br>
+                            &ltstyle&gt<br>
+                            h1{background-color: blue;}<br>
+                            &lt/style&gt
+                        </p>
+                    </li>
+                    <li class="flex_table_cell">
+                        <p class="center strong no_padding no_margin">
+                            - External -
+                        </p>
+                        <p>
+                            In a seperate stylesheet file called NAME.css
+                        </p>
+                    </li>
+                </ul>
+                Note that for inline styling, only properties and values has to be specified.
+            </p>
+            <p>
+                Furthermore, instead of widely selecting all h1 tags or p tags in a file to have a fixed style,
+                classes and id's can be defined in the .css sheet as a style that html tags can adopt.
+                <ul class="flex_row">
+                    <li class="flex_table_cell">
+                        <p class="center strong no_padding no_margin">
+                            - Class -
+                        </p>
+                        <p>
+                            Defined by<br>
+                            &ltp class="CLASS_NAME"&gt<br><br>
+                            Selected by<br>
+                            .CLASS_NAME{property:value}
+                        </p>
+                    </li>
+                    <li class="flex_table_cell">
+                        <p class="center strong no_padding no_margin">
+                            - Id -
+                        </p>
+                        <p>
+                            Defined by<br>
+                            &ltp id="ID_NAME"&gt<br><br>
+                            Selected by<br>
+                            #ID_NAME{property:value}
+                        </p>
+                    </li>
+                </ul>
             </p>
         </div><hr>
+<!-- HTML/CSS BOX MODEL -->
         <div class="mainBody">
             <h2>HTML/CSS Box Model</h2>
             <p>
@@ -65,25 +133,56 @@
                 -positining blocks (static vs relative vs absolute vs fixed)<br>
             </p>
         </div><hr>
+<!-- PARALLAX EFFECT -->
         <div class="mainBody">
             <h2>Parallax Effect</h2>
             <p>Todo, see this guide <a href="https://blog.logrocket.com/create-parallax-scrolling-css/">link</a><p>
         </div><hr>
+<!-- MISCELLANOUS / UNSORTED -->
         <div class="mainBody">
             <h2>Miscellanous/Unsorted</h2>
             <p>
                 Using links to jump between page.
             </p>
-            <a href="#_html_markup">
             <p>
+                <a href="#_html_markup">
                 Click me to return to HTML intro!
-            </p></a>
+                </a>
+            </p>
 
-            <a href="#_css_intro">
             <p>
+                <a href="#_css_intro">
                 Click me to return to CSS Intro!
-            </p></a>
+                </a>
+            </p>
 
-            <a href="https://www.w3schools.com/css/css_dropdowns.asp">
-            <p>Dropdowns</p></a>
+            <p>
+                <a href="https://www.w3schools.com/css/css_dropdowns.asp">
+                Dropdowns
+                </a>
+            </p>
+        </div><hr>
+<!-- TESTING FLEXBOX -->
+        <div class="mainBody">
+            <h2>Testing Flexbox</h2>
+            <ul class="flex_row">
+                <li class="flex_codesnip_item">
+                    <p class="center no_padding no_margin">
+                        CSS Font Styling
+                    </p>
+
+                    <p>
+                        font-family: "FONTNAME", family;<br>
+                        font-size: 0.8em;<br>
+                        color: RGB;
+                    </p>
+                </li>
+                <li class="flex_codesnip_item">
+                    2
+                </li>
+                <li class="flex_codesnip_item">
+                    3
+                </li>
+            </div>
+        </div>
     </body>
