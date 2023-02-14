@@ -1,0 +1,36 @@
+body{
+    background-color: #a9fcea;
+}
+
+hr{
+    background-color: white;
+    border-style: dotted none none;
+    border-color: orange;
+    border-width: 5px;
+    width: 30%;
+}
+
+h1, h2{
+    color: #272091;
+    display: inline-block;
+    border-style: none;
+    border-bottom-style: solid;
+    border-color: rgb(0, 61, 36);
+    font-family: "Georgia";
+}
+
+.footer{
+    background-color: white;
+    position: fixed;
+    bottom: 0;
+    left: 0%;
+    right: 0%;
+    text-align: center;
+}
+
+a, a:visited, a:hover, a:active{
+    text-decoration: none;
+    font-weight: 900;
+    font-size: larger;
+    color:rgb(33, 33, 34);
+}

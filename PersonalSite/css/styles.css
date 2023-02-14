@@ -1,0 +1,70 @@
+/*Colour Scheme*/
+.col_black      {color: #333745;}
+.col_popPink    {color: #E63462;}
+.col_orange     {color: #FE5F55;}
+.col_limeGreen  {color:#C7EFCF;}
+.col_paleGreen  {color:#EEF5DB;}
+
+.col_1{color: #386641;}
+.col_2{color: #6A994E;}
+.col_3{color: #A7C957;}
+.col_4{color: #F2E8CF;}
+.col_5{color: #BC4749;}
+    
+
+head{
+    background-color: magenta;
+    margin: 0;
+}
+
+body{
+    margin: 0;
+    background-color: #F2E8CF;
+}
+
+h1{
+    margin-top: 0;
+}
+
+.mainDiv{
+    background-color: #A7C957;
+    width: 400px;
+    height: 400px;
+    /*border-radius: 30px;*/
+    border: solid 10px;
+    position: relative;
+    left:50px;
+}
+
+.secondDiv{
+    background-color: yellow;
+    /*border-radius: 5%;*/
+    border:solid rgb(90, 60, 5) 5px;
+    margin-left: 220px;
+    width:100px;
+    height:100px;
+}
+
+.thirdDiv{
+    background-color: red;
+    /*border-radius: 5%;*/
+    border:dashed blue 15px; 
+    margin-left: 430px;
+    width:100px;
+    height:100px;
+}
+
+.inline_img{
+    display: inline-block;
+    border-radius: 25%;
+    width: 150px;
+}
+
+.footer_container{
+    position: absolute;
+    margin: auto;
+    bottom: 20px;
+    left: 25%;
+    right: 25%;
+    text-align: center;
+}
