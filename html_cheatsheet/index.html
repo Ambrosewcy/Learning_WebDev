@@ -10,7 +10,7 @@
     </head>
 
     <body>
-        <h1>
+        <h1 id="_html_markup">
             Simple HTML Markup
         </h1>
         <div class="mainBody">
@@ -41,7 +41,7 @@
             <p>style - keyword to mark inline css styling in another html tag.</p> 
         </div><hr>
         <div class="mainBody">
-            <h2 class="center">Intro CSS</h2>
+            <h2 class="center" id="_css_intro">Intro CSS</h2>
             <p>
                 Basic HTML lacks styling and layout options. <br>
                 They exist, but what limited functionality they provide can also become cumbersome and messy to manage.<br>
@@ -59,9 +59,7 @@
                 All elements displayed on a webpage, text images links etc are served within a box that describes sizes for padding, borders, margins as well as the content itself to 
                 layout the contents. These sizes can then be modifed in CSS to reposition objects.
             </p>
-            <a href="images/box_model.png" class="imageLink">
             <img src="images/box_model.png" alt="box model" class="center_image">
-            </a>
             <p>
                 -properties to change sizes<br>
                 -positining blocks (static vs relative vs absolute vs fixed)<br>
@@ -70,5 +68,22 @@
         <div class="mainBody">
             <h2>Parallax Effect</h2>
             <p>Todo, see this guide <a href="https://blog.logrocket.com/create-parallax-scrolling-css/">link</a><p>
-        </div>
+        </div><hr>
+        <div class="mainBody">
+            <h2>Miscellanous/Unsorted</h2>
+            <p>
+                Using links to jump between page.
+            </p>
+            <a href="#_html_markup">
+            <p>
+                Click me to return to HTML intro!
+            </p></a>
+
+            <a href="#_css_intro">
+            <p>
+                Click me to return to CSS Intro!
+            </p></a>
+
+            <a href="https://www.w3schools.com/css/css_dropdowns.asp">
+            <p>Dropdowns</p></a>
     </body>

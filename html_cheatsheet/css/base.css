@@ -4,6 +4,10 @@
 .col_4{color: #F2E8CF;}
 .col_5{color: #BC4749;}
 
+html{
+    scroll-behavior: smooth;
+}
+
 .indent1{
     margin-left: 12px;
 }
