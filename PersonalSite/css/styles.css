@@ -19,18 +19,47 @@ head{
 
 body{
     margin: 0;
-    background-color: #F2E8CF;
+    background-color: #6A994E;
     text-align: center;
     color: rgb(241, 255, 244);
 }
 
-h1{
+hr{
     width: 20%;
-    margin: 0 auto 0 auto;
-    font-family: 'Prompt', sans-serif;
-    font-size: 3em;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-style: dotted none none;
+    border-width: 20px;
+    color: #6A994E;
 }
 
+h1{
+    width: 30%;
+    margin: 30% auto 10px auto;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 4rem;
+    line-height: 1.5;
+    color: #386641;
+}
+
+h2{
+    font-size: 2rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: normal;
+    color: #386641;
+}
+
+h3{
+    color: #1262ad;
+}
+
+a{
+    color: #1262ad;
+}
+
+p{
+    color: #386641;
+}
 
 .mainDiv{
     background-color: #A7C957;
@@ -40,7 +69,6 @@ h1{
 
 .secondDiv{
     background-color: yellow;
-    /*border-radius: 5%;*/
     border:solid rgb(90, 60, 5) 5px;
     width:100px;
     height:100px;
@@ -54,8 +82,42 @@ h1{
     height:100px;
 }
 
+.skill-row{
+    margin: 100px auto 100px auto;
+    line-height: 1.5;
+    width:70%;
+}
+
+.align-right{
+    text-align: right;
+}
+
+.align-left{
+    text-align: left;
+}
+
+/*Class for images used to accompany paragraph*/
+.image-paragraph{
+    position: relative;
+    margin: 20px;
+    bottom: 30px;
+    width: 150px;
+}
+
+.image-float-left{
+    float:left;
+}
+
+.image-float-right{
+    float:right;
+}
+
+.image-featured{
+    width: 200px;
+}
+
 .profile-round{
-    margin: 10px;
+    margin: 20px;
     border-radius: 50%;
     border: 2px solid;
     width: 250px;
@@ -68,17 +130,60 @@ h1{
 }
 
 .bottom-container{
-    background-color: #cfe484;
+    background-color: #6A994E;
+}
+
+.footer-link{
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #386641;
+    position: relative;
+    top:20px;
+    padding: 5px 10px 5px 10px;
+}
+
+.footer-link:hover{    
+    color: #A7C957;
 }
 
 #cloud1{
     position: absolute;
-    right: 20%;
-    top:20px;
+    right: 15%;
+    top:30px;
 }
 
 #cloud2{
     position: absolute;
-    left:20%;
+    left:10%;
     top:30%;
 }
+
+.btn {
+    border:solid;
+    border-color: #386641;
+    background: #A7C957;
+    background-image: -webkit-linear-gradient(top, #A7C957, #A7C957);
+    background-image: -moz-linear-gradient(top, #A7C957, #A7C957);
+    background-image: -ms-linear-gradient(top, #A7C957, #A7C957);
+    background-image: -o-linear-gradient(top, #A7C957, #A7C957);
+    background-image: linear-gradient(to bottom, #A7C957, #A7C957);
+    -webkit-border-radius: 28;
+    -moz-border-radius: 28;
+    border-radius: 28px;
+    font-family: Georgia;
+    color: #386641;
+    font-size: 20px;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    margin: 20px;
+  }
+  
+  .btn:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+  }
