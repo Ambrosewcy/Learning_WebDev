@@ -54,6 +54,23 @@ h1{
     height:100px;
 }
 
+.profile-round{
+    margin: 10px;
+    border-radius: 50%;
+    border: 2px solid;
+    width: 250px;
+    border-color: #386641;
+    border-width: 5px;
+}
+
+.middle-container{
+    background-color: #cfe484;
+}
+
+.bottom-container{
+    background-color: #cfe484;
+}
+
 #cloud1{
     position: absolute;
     right: 20%;
