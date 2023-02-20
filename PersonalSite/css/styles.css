@@ -50,7 +50,8 @@ h2{
 }
 
 h3{
-    color: #1262ad;
+    color: #386641;
+    font-family: 'Share Tech Mono', monospace;
 }
 
 a{
@@ -130,6 +131,7 @@ p{
 
 .bottom-container{
     background-color: #6A994E;
+    padding: 25px 0px 50px 0px;
 }
 
 .footer-link{
