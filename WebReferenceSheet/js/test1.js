@@ -42,11 +42,59 @@ function TitleCasify() {
     ++strIndex;
   }
 
+  Tools.log(msg);
+  Tools.TypeOfNamespace();
   document.getElementById("TITLE_CASIFY").innerHTML = "Titled Message = " + "<span class='strong'>" + msg + "</span>";
 }
 
-/*
-  JAVA SCRIPT NAMING CONVENTIONS
-  - camelCase
-  - 2 Spaces for code indentations
-*/
+function TestPassReference(){
+  var myObj = {foo: "This is the original"};
+  var secObj = myObj;
+  secObj.foo = "This is the modified";
+  console.log(myObj);
+}
+
+function GetFirstWord(msg)
+{
+  var wordArray = msg.split(" ");
+  return wordArray[0];
+}
+
+function GetFirstNWords(msg, count)
+{
+  var wordArray = msg.split(" ");
+  return wordArray.slice(0, count);
+}
+
+function TestGetWord()
+{
+  var msg = "This is my long word";
+  var word = GetFirstWord(msg);
+  var words = GetFirstNWords(msg, 3);
+
+  console.log(typeof(word));
+  console.log(JSON.stringify(words, null, 1));
+  console.log(typeof(Tools.Print));
+}
+
+function GetRandomNumber(rangeStart = 0, rangeEnd = 1){
+  return rangeStart + Math.random() * (rangeEnd - rangeStart);
+}
+
+function TestRandomNumber()
+{
+  var element = document.getElementById("RANDOM_RANGE");
+  element.innerHTML = "Random Range 1 - 50: " + GetRandomNumber(1, 50);
+}
+
+var Tools = {
+  Print(text)
+  {
+    console.log(text);
+  },
+
+  TypeOfNamespace()
+  {
+    console.log(typeof(Tools));
+  }
+}
