@@ -60,7 +60,7 @@ function ButtonRequest(){
 
     const forceFileLoad = async() =>{
         try{
-            const response = await axios.get("http://localhost:8000/models");
+            const response = await axios.get("http://localhost:8000/models/fruitSnackTable/3");
         }catch(error){
             console.error(error);
         }

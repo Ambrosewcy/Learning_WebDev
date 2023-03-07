@@ -1,6 +1,9 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+
+import shutil, os, random, sys
+
 import json
 import model_io
 import uvicorn
@@ -76,10 +79,10 @@ async def get_model_URL(request: Request):
 
 @app.get("/models/{modelName}/{fileName}")
 async def load_model_file(modelName: str, fileName: str):
-    print("Function Called")
+    path = "model_directory"
+    print(path, " ", modelName, " " , fileName)
     path = model_directory + modelName + "/" + fileName
-    print(path)
-    return {"Help"}
+    return FileResponse(path)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="192.168.1.126", port=8000)
