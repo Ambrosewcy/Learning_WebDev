@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Engine, Scene } from "@babylonjs/core";
+import { Engine, Scene} from "@babylonjs/core";
 
 function BabylonSceneComponent({ antialias, engineOptions, adaptToDeviceRatio, sceneOptions, onRender, onSceneReady, ...rest }){
   const reactCanvas = useRef(null);

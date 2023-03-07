@@ -1,0 +1,86 @@
+var createScene = function () {
+
+    // This creates a basic Babylon Scene object (non-mesh)
+    var scene = new BABYLON.Scene(engine);
+
+    // This creates and positions a free camera (non-mesh)
+    var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+
+    // This targets the camera to scene origin
+    camera.setTarget(BABYLON.Vector3.Zero());
+
+    // This attaches the camera to the canvas
+    camera.attachControl(canvas, true);
+
+    // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+    var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+
+    // Default intensity is 1. Let's dim the light a small amount
+    light.intensity = 0.7;
+
+    // Our built-in 'sphere' shape.
+    var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, scene);
+
+    // Move the sphere upward 1/2 its height
+    sphere.position.y = 1;
+
+    // Our built-in 'ground' shape.
+    var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, scene);
+
+    // GUI
+    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+    // set up material to accept animation
+    var buttonColor = new BABYLON.StandardMaterial("buttonColor", scene);
+    buttonColor.diffuseColor = new BABYLON.Color3(0, 1, 0)
+
+    var button = BABYLON.GUI.Button.CreateSimpleButton("but", "Click Me");
+    button.width = 0.2;
+    button.height = "40px";
+    button.color = "white";
+    button.left = 0;
+    button.background = new BABYLON.Color3(0, 1, 0).toHexString();
+    button.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    button.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    advancedTexture.addControl(button);    
+
+    // set up animation and keyframes
+    var wrong = new BABYLON.Animation("wrong", "diffuseColor", 60, BABYLON.Animation.ANIMATIONTYPE_COLOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var keys = [
+        {frame: 0, value: new BABYLON.Color3(0, 1, 0)},
+        {frame: 20, value: new BABYLON.Color3(1, 0, 0)},
+        {frame: 30, value: new BABYLON.Color3(0.5, 0, 0)},
+        {frame: 40, value: new BABYLON.Color3(1, 0, 0)},
+        {frame: 60, value: new BABYLON.Color3(0, 1, 0)},
+    ];
+
+    var move = new BABYLON.Animation("move", "left", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var keys2 = [
+        {frame: 0, value: 0},
+        {frame: 20, value:20},
+        {frame:30, value: -20},
+        {frame: 40, value:70},
+        {frame: 60, value:50}
+    ]
+
+    // assign keyframes
+    wrong.setKeys(keys);
+    move.setKeys(keys2);
+
+    const endFunction = function(){
+        console.log("Animation Finished!");
+        button.left += 50;
+    }
+
+    button.onPointerClickObservable.add(() => {
+        scene.beginDirectAnimation(buttonColor, [wrong], 0, keys[keys.length - 1].frame, false, 1, endFunction);
+        scene.beginDirectAnimation(button, [move], 0, keys[keys.length - 1].frame, false, 1);
+    });
+
+    scene.registerBeforeRender(function() {
+        button.background = buttonColor.diffuseColor.toHexString();
+    });
+
+    return scene;
+
+};

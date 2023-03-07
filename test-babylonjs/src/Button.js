@@ -35,9 +35,40 @@ function ButtonRequest(){
         }
     }
 
+    const messageServer = async() =>{
+        const name = "table_fruit_snacks";
+        //const data = {name};
+        const data = {
+            Name: "fruitSnackTable",
+            Selection: "Any",
+            Version: "1.0"
+        }
+        try{
+            //const response = await axios.post("http://192.168.1.126:8000/findModel2", data);
+            const response = await axios.post("http://192.168.1.126:8000/getModelURL", data);
+            //console.log(response.data);
+            //console.log(response.data.Version);
+            //console.log(response.headers);
+            //console.log(response.data.models);
+            console.log(response.data)
+            //const models = response.data.models;
+            //models.forEach(fileName => console.log(fileName));
+        }catch(error){
+            console.error(error);
+        }
+    }
+
+    const forceFileLoad = async() =>{
+        try{
+            const response = await axios.get("http://localhost:8000/models");
+        }catch(error){
+            console.error(error);
+        }
+    }
+
     return (
         <div>
-            <button onClick={handleButton}>Button!</button>
+            <button onClick={forceFileLoad}>Button!</button>
             <p>{infoString}</p>
             <p>reqCount: {requestCount + reqCount}</p>
             <p>{infoCount}</p>
