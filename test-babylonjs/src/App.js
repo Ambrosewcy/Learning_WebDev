@@ -6,6 +6,7 @@ import SceneComponent from "./SceneComponent"; // uses above component in same d
 
 import { ImmersificationFlyCamera } from "./babylon_scripts/_FlyCamera";
 import { MeshFactory} from "./babylon_scripts/_MeshFactory";
+import {GUIManager} from "./babylon_scripts/_GuiManager";
 
 import "./App.css";
 
@@ -18,7 +19,9 @@ let pickedMesh;
 let boxCreateCount = 0;
 let xPosInput, yPosInput, zPosInput;
 
-const onSceneReady = (scene) => {
+let guiManager;
+
+const onSceneReady = async (scene) => {
   // This creates and positions a free camera (non-mesh)
   divFps = document.getElementById("fps");
   const camera = new FreeCamera("camera1", new Vector3(0, 5, -10), scene);
@@ -30,7 +33,53 @@ const onSceneReady = (scene) => {
   
   gizmoManager = new GizmoManager(scene);  
   gizmoManager.positionGizmoEnabled = true;
-  gizmoManager.attachableMeshes = [box, grnd, house];
+  gizmoManager.attachableMeshes = [];
+
+  // This attaches the camera to the canvas
+  const camController = new ImmersificationFlyCamera(_canvas);
+  camera.attachControl(canvas, true);
+  camera.inputs.removeByType("FreeCameraKeyboardMoveInput");
+  camera.inputs.add(camController);
+  camController.camera = camera;
+  
+  meshFactory = new MeshFactory(scene, _canvas, gizmoManager);
+  box = meshFactory.CreateBox(1, new Vector3(0.0, 3.0, 2.0), "newBox", true)
+  meshFactory.CreateGround(6, new Vector3(0, 0, 0), "FlatGround", true);
+
+  // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+  const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
+
+  // Default intensity is 1. Let's dim the light a small amount
+  light.intensity = 0.7;
+
+  var burg = SceneLoader.ImportMeshAsync("", "http://localhost:8000/models/fruitSnackTable/", "3.obj", scene).then(function(meshes){
+    console.log(meshes);
+    burg.isPickable = true;
+  }, function(error){
+    console.log(error)
+  }
+  )
+  gizmoManager.attachableMeshes.push(burg);
+
+  burg.isPickable = true;
+  
+  // GUI
+  var advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("UI");
+  camController.guiControls(advancedTexture);
+
+  scene.onPointerObservable.add((pointInfo)=>{
+    if(pointInfo.type == PointerEventTypes.POINTERPICK && pointInfo.pickInfo.hit)
+    {
+      console.log("Picked");
+      pickedMesh = pointInfo.pickInfo.pickedMesh;
+
+      console.log("PickedMesh.position: ", pickedMesh.position)
+      xPosInput.text = pickedMesh.position.x;
+      yPosInput.text = pickedMesh.position.y;
+      zPosInput.text = pickedMesh.position.z;
+    }
+  })
+
   // Toggle gizmos with keyboard buttons
   document.onkeydown = (e)=>{
     if(e.key == 'w'){
@@ -57,63 +106,13 @@ const onSceneReady = (scene) => {
         gizmoManager.rotationGizmoEnabled = false;
         gizmoManager.scaleGizmoEnabled = false;
     }
+    if(e.key == 'h'){
+      //advancedTexture.parseFromSnippetAsync("#PWXSII", false);
+      //advancedTexture.parseFromSnippetAsync("#N5TIWA", false);
+      guiManager = new GUIManager();
+      guiManager.InitializeGUI();
   }
-
-  // This attaches the camera to the canvas
-  //const camController = new FreeCameraKeyboardRotateInput();
-  const camController = new ImmersificationFlyCamera(_canvas);
-  camera.attachControl(canvas, true);
-  camera.inputs.removeByType("FreeCameraKeyboardMoveInput");
-  camera.inputs.add(camController);
-  camController.camera = camera;
-  
-  meshFactory = new MeshFactory(scene, _canvas, gizmoManager);
-  box = meshFactory.CreateBox(1, new Vector3(0.0, 3.0, 2.0), "newBox", true)
-  meshFactory.CreateGround(6, new Vector3(0, 0, 0), "FlatGround", true);
-
-  /*
-  const xOffset = -4;
-  for(let i = 0; i < 5; ++i){
-      var tempBox = meshFactory.CreateBox(1, new Vector3(xOffset + i * 2, 0.5, -2), "new_box_" + i, true);
-      tempBox.rotation.y += 10 * i;
-  }*/
-
-  // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
-  const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
-
-  // Default intensity is 1. Let's dim the light a small amount
-  light.intensity = 0.7;
-
-  // Our built-in 'ground' shape.
-  var grnd = MeshBuilder.CreateGround("ground", { width: 6, height: 6 }, scene);
-  grnd.isPickable = true;
-
-  var house = SceneLoader.ImportMeshAsync("semi_house", "https://assets.babylonjs.com/meshes/", "both_houses_scene.babylon");
-  house.isPickable = true;
-  house.checkCollisions = true;
-  //SceneLoader.ImportMeshAsync("fruitSnackTable", "http://localhost:8000/models/fruitSnackTable/", "3.obj", scene).then(function(meshes){
-  //  console.log(meshes);
-  //}, function(error){
-  //  console.log(error)
-  //}
-  //)
-  
-  // GUI
-  var advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("UI");
-  camController.guiControls(advancedTexture);
-
-  scene.onPointerObservable.add((pointInfo)=>{
-    if(pointInfo.type == PointerEventTypes.POINTERPICK && pointInfo.pickInfo.hit)
-    {
-      console.log("Picked");
-      pickedMesh = pointInfo.pickInfo.pickedMesh;
-
-      console.log("PickedMesh.position: ", pickedMesh.position)
-      xPosInput.text = pickedMesh.position.x;
-      yPosInput.text = pickedMesh.position.y;
-      zPosInput.text = pickedMesh.position.z;
-    }
-  })
+  }
 
   xPosInput = new InputText();
   xPosInput.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_CENTER;
@@ -206,15 +205,14 @@ const onSceneReady = (scene) => {
     }
     boxCreateCount += 1;
   })
-  
-
 
   advancedTexture.addControl(xPosInput);
   advancedTexture.addControl(yPosInput);
   advancedTexture.addControl(zPosInput);
   advancedTexture.addControl(createBoxButton);
-  scene.getEngine().onResizeObservable.add(() =>{
 
+  //let ui = await advancedTexture.parseFromSnippetAsync("#PWXSII", false);
+  scene.getEngine().onResizeObservable.add(() =>{
   }
   )
 };
