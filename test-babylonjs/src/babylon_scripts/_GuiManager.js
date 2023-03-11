@@ -19,8 +19,12 @@ class TransformInspector{
     }
 }
 
+var _sGuiManager = undefined;
 export class GUIManager{
+
+
     constructor(){
+        this.pickedObject = null;
         this.transformUI = new TransformInspector();
         this.babylonAdvanceTexture = AdvancedDynamicTexture.CreateFullscreenUI("InspectorDynamicTexture");
     }
@@ -30,17 +34,29 @@ export class GUIManager{
         let key = input.currentKey;
         if(isNaN(parseFloat(key)) && key !== "." && key !== "-"){
             input.addKey = false;
-            console.log("Disallowed");
         }
         else{
             input.addKey = true;
         }
     }
 
+    UpdatePickedObjectPosition(input){
+        if(_sGuiManager.pickedObject)
+        {
+            let posUI = _sGuiManager.transformUI.position;
+    
+            _sGuiManager.pickedObject.position.x = posUI.x.text;
+            _sGuiManager.pickedObject.position.y = posUI.y.text;
+            _sGuiManager.pickedObject.position.z = posUI.z.text;
+        }
+    }
+
     async InitializeGUI(){
         //Load UI canvas from file/web
+        _sGuiManager = this;
         let advTexture = this.babylonAdvanceTexture;
         await advTexture.parseFromURLAsync("inspectorUI.json", false);
+
 
         //Bind input fields to expected UI
         this.transformUI.position.x = advTexture.getControlByName("transform_position_x");
@@ -51,6 +67,15 @@ export class GUIManager{
         this.transformUI.position.y.onBeforeKeyAddObservable.add(GUIManager.BindInput_OnlyAcceptNumbers);
         this.transformUI.position.z.onBeforeKeyAddObservable.add(GUIManager.BindInput_OnlyAcceptNumbers);
         
+        this.transformUI.position.x.onTextChangedObservable.add(this.UpdatePickedObjectPosition)
+        this.transformUI.position.y.onTextChangedObservable.add(this.UpdatePickedObjectPosition)
+        this.transformUI.position.z.onTextChangedObservable.add(this.UpdatePickedObjectPosition)
+        
         //
+    }
+
+    AssignPickedObject(obj){
+        this.pickedObject = obj;
+        console.log("Picked Object");
     }
 }

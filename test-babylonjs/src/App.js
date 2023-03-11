@@ -67,19 +67,6 @@ const onSceneReady = async (scene) => {
   var advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("UI");
   camController.guiControls(advancedTexture);
 
-  scene.onPointerObservable.add((pointInfo)=>{
-    if(pointInfo.type == PointerEventTypes.POINTERPICK && pointInfo.pickInfo.hit)
-    {
-      console.log("Picked");
-      pickedMesh = pointInfo.pickInfo.pickedMesh;
-
-      console.log("PickedMesh.position: ", pickedMesh.position)
-      xPosInput.text = pickedMesh.position.x;
-      yPosInput.text = pickedMesh.position.y;
-      zPosInput.text = pickedMesh.position.z;
-    }
-  })
-
   // Toggle gizmos with keyboard buttons
   document.onkeydown = (e)=>{
     if(e.key == 'w'){
@@ -111,6 +98,24 @@ const onSceneReady = async (scene) => {
       //advancedTexture.parseFromSnippetAsync("#N5TIWA", false);
       guiManager = new GUIManager();
       guiManager.InitializeGUI();
+
+      scene.onPointerObservable.add((pointInfo)=>{
+        if(pointInfo.type == PointerEventTypes.POINTERPICK && pointInfo.pickInfo.hit)
+        {
+          pickedMesh = pointInfo.pickInfo.pickedMesh;
+          guiManager.AssignPickedObject(pickedMesh);
+    
+          //console.log("PickedMesh.position: ", pickedMesh.position)
+          //console.log("Direct Mesh Position: ", pickedMesh);
+          xPosInput.text = pickedMesh.position.x;
+          yPosInput.text = pickedMesh.position.y;
+          zPosInput.text = pickedMesh.position.z;
+        }
+      })
+
+      if(e.key == 'j'){
+        guiManager.AssignPickedObject(pickedMesh);
+      }
   }
   }
 
@@ -157,7 +162,7 @@ const onSceneReady = async (scene) => {
     }
   })
   yPosInput.onTextChangedObservable.add((input)=>{
-    if(pickedMesh == null){
+    if(pickedMesh === null){
       return;
     }
     pickedMesh.position.y = yPosInput.text;
@@ -228,6 +233,19 @@ const onRender = (scene) => {
     const rpm = 10;
     box.rotation.y += (rpm / 60) * Math.PI * 2 * (deltaTimeInMillis / 1000);
     box.rotation.x = box.rotation.y;
+  }
+
+  if(guiManager !== undefined && guiManager !== null)
+  {
+    //console.log("GuiPicked Object is null?", guiManager.pickedObject);
+    if(guiManager.pickedObject !== undefined && guiManager.pickedObject !== null)
+    {
+      //console.log("GuiMan picked Object: ", guiManager.pickedObject.position);
+    }
+    else
+    {
+      console.log("GuiMan picked mesh is null");
+    }
   }
 };
 
