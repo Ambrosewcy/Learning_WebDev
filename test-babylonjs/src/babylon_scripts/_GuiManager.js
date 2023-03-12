@@ -148,22 +148,25 @@ export class GUIManager{
     }
 
     UpdateTransformValues(){
+        if(!_sGuiManager.pickedObject)
+            return;
+            
         let picked = _sGuiManager.pickedObject;
         let posUI = _sGuiManager.transformUI.position;
         let rotUI = _sGuiManager.transformUI.rotation;
         let scaleUI = _sGuiManager.transformUI.scale;
 
-        posUI.x.text = picked.position.x;
-        posUI.y.text = picked.position.y;
-        posUI.z.text = picked.position.z;
+        posUI.x.text = parseFloat(picked.position.x).toFixed(2);
+        posUI.y.text = parseFloat(picked.position.y).toFixed(2);
+        posUI.z.text = parseFloat(picked.position.z).toFixed(2);
 
-        rotUI.x.text = Math_Utilities.radians_to_degrees(picked.rotation.x);
-        rotUI.y.text = Math_Utilities.radians_to_degrees(picked.rotation.y);
-        rotUI.z.text = Math_Utilities.radians_to_degrees(picked.rotation.z);
+        rotUI.x.text = parseFloat(Math_Utilities.radians_to_degrees(picked.rotation.x)).toFixed(2);
+        rotUI.y.text = parseFloat(Math_Utilities.radians_to_degrees(picked.rotation.y)).toFixed(2);
+        rotUI.z.text = parseFloat(Math_Utilities.radians_to_degrees(picked.rotation.z)).toFixed(2);
 
-        scaleUI.x.text = picked.scaling.x;
-        scaleUI.y.text = picked.scaling.y;
-        scaleUI.z.text = picked.scaling.z;
+        scaleUI.x.text = parseFloat(picked.scaling.x).toFixed(2);
+        scaleUI.y.text = parseFloat(picked.scaling.y).toFixed(2);
+        scaleUI.z.text = parseFloat(picked.scaling.z).toFixed(2);
     }
 
     AssignPickedObject(obj){

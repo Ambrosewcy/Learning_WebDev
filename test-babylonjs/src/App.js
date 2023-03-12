@@ -31,7 +31,7 @@ const onSceneReady = async (scene) => {
   const canvas = scene.getEngine().getRenderingCanvas();
   _canvas = canvas;
   
-  gizmoManager = new GizmoManager(scene);  
+  gizmoManager = new GizmoManager(scene);
   gizmoManager.positionGizmoEnabled = true;
   gizmoManager.attachableMeshes = [];
 
@@ -108,6 +108,7 @@ const onSceneReady = async (scene) => {
       if(e.key == 'j'){
         guiManager.AssignPickedObject(pickedMesh);
       }
+      scene.onBeforeRenderObservable.add(guiManager.UpdateTransformValues);
   }
   }
 
@@ -129,12 +130,8 @@ const onSceneReady = async (scene) => {
     boxCreateCount += 1;
   })
 
-  advancedTexture.addControl(xPosInput);
-  advancedTexture.addControl(yPosInput);
-  advancedTexture.addControl(zPosInput);
   advancedTexture.addControl(createBoxButton);
 
-  //let ui = await advancedTexture.parseFromSnippetAsync("#PWXSII", false);
   scene.getEngine().onResizeObservable.add(() =>{
   }
   )
@@ -151,19 +148,6 @@ const onRender = (scene) => {
     const rpm = 10;
     box.rotation.y += (rpm / 60) * Math.PI * 2 * (deltaTimeInMillis / 1000);
     box.rotation.x = box.rotation.y;
-  }
-
-  if(guiManager !== undefined && guiManager !== null)
-  {
-    //console.log("GuiPicked Object is null?", guiManager.pickedObject);
-    if(guiManager.pickedObject !== undefined && guiManager.pickedObject !== null)
-    {
-      //console.log("GuiMan picked Object: ", guiManager.pickedObject.position);
-    }
-    else
-    {
-      console.log("GuiMan picked mesh is null");
-    }
   }
 };
 
