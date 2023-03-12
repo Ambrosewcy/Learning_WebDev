@@ -1,7 +1,8 @@
 import React from "react";
 import {InputText, AdvancedDynamicTexture, Button, Control, Slider} from '@babylonjs/gui';
+//import 'babylonjs-inspector'
 import '@babylonjs/loaders'
-import {PointerEventTypes, GizmoManager, SceneLoader, Engine, Tools, FreeCamera, Vector3, HemisphericLight, MeshBuilder } from "@babylonjs/core";
+import {Matrix, PointerEventTypes, GizmoManager, SceneLoader, Engine, Tools, FreeCamera, Vector3, HemisphericLight, MeshBuilder } from "@babylonjs/core";
 import SceneComponent from "./SceneComponent"; // uses above component in same directory
 
 import { ImmersificationFlyCamera } from "./babylon_scripts/_FlyCamera";
@@ -51,8 +52,9 @@ const onSceneReady = async (scene) => {
 
   // Default intensity is 1. Let's dim the light a small amount
   light.intensity = 0.7;
+  //scene.debugLayer.show({embedMode: true,})
 
-  var burg = SceneLoader.ImportMeshAsync("", "http://localhost:8000/models/fruitSnackTable/", "3.obj", scene).then(function(meshes){
+  var burg = SceneLoader.ImportMeshAsync("", "", "3.obj", scene).then(function(meshes){
     console.log(meshes);
     burg.isPickable = true;
   }, function(error){
@@ -62,7 +64,7 @@ const onSceneReady = async (scene) => {
   gizmoManager.attachableMeshes.push(burg);
 
   burg.isPickable = true;
-  
+
   // GUI
   var advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("UI");
   camController.guiControls(advancedTexture);
@@ -111,6 +113,16 @@ const onSceneReady = async (scene) => {
       scene.onBeforeRenderObservable.add(guiManager.UpdateTransformValues);
   }
   }
+
+  scene.onPointerDown = function castRay(){
+    var ray = scene.createPickingRay(scene.pointerX, scene.pointerY, Matrix.Identity(), camera);	
+
+    var hit = scene.pickWithRay(ray);
+
+    if (hit.pickedMesh){
+      console.log("Hit a Mesh called: ", hit.pickedMesh.name);
+    }
+}   
 
   const createBoxButton = new Button("CreateBox", "Create Box");
   createBoxButton.text = "Create Box";

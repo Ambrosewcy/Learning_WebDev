@@ -1,7 +1,10 @@
 import {Mesh, PointerEventTypes, GizmoManager, SceneLoader, Engine, Tools, Vector3} from "@babylonjs/core";
 import { Math_Utilities } from "../utils/Math";
 import {AdvancedDynamicTexture} from '@babylonjs/gui';
-
+/**
+ * This GUI Manager script and class is in charge of handling 
+ * 
+ */
 //Properties x y and z are intended as references to input fields in babylon GUI
 class Vector3UIControl{
     constructor(){
@@ -39,6 +42,7 @@ export class GUIManager{
         }
     }
 
+    //Callback function to take input text value and assign to picked object position.
     UpdatePickedObjectPosition(input){
         if(_sGuiManager.pickedObject)
         {
@@ -52,6 +56,7 @@ export class GUIManager{
         }
     }
 
+    //Callback function to take input text value and assign to picked object rotation.
     UpdatePickedObjectRotation(input){
         if(_sGuiManager.pickedObject)
         {
@@ -65,6 +70,7 @@ export class GUIManager{
         }
     }
 
+    //Callback function to take input text value and assign to picked object scale.
     UpdatePickedObjectScale(input){
         if(_sGuiManager.pickedObject)
         {
@@ -76,6 +82,13 @@ export class GUIManager{
                 default: console.warn("UpdatePickedObjectScale Expected x, y, or z. Received: " + input._managedInput);
             }
         }
+    }
+
+    MarkTextInputFocused(input){
+        input._isFocused = true;
+    }
+    MarkTextInputBlurred(input){
+        input._isFocused = false;
     }
 
 
@@ -92,6 +105,10 @@ export class GUIManager{
         posUI.y._managedInput = 'y';
         posUI.z._managedInput = 'z';
         
+        posUI.x._isFocused = false;
+        posUI.y._isFocused = false;
+        posUI.z._isFocused = false;
+
         posUI.x.onBeforeKeyAddObservable.add(GUIManager.BindInput_OnlyAcceptNumbers);
         posUI.y.onBeforeKeyAddObservable.add(GUIManager.BindInput_OnlyAcceptNumbers);
         posUI.z.onBeforeKeyAddObservable.add(GUIManager.BindInput_OnlyAcceptNumbers);
@@ -99,6 +116,14 @@ export class GUIManager{
         posUI.x.onTextChangedObservable.add(this.UpdatePickedObjectPosition);
         posUI.y.onTextChangedObservable.add(this.UpdatePickedObjectPosition);
         posUI.z.onTextChangedObservable.add(this.UpdatePickedObjectPosition);
+
+        posUI.x.onFocusObservable.add(this.MarkTextInputFocused);
+        posUI.y.onFocusObservable.add(this.MarkTextInputFocused);
+        posUI.z.onFocusObservable.add(this.MarkTextInputFocused);
+
+        posUI.x.onBlurObservable.add(this.MarkTextInputBlurred);
+        posUI.y.onBlurObservable.add(this.MarkTextInputBlurred);
+        posUI.z.onBlurObservable.add(this.MarkTextInputBlurred);
 
         //Initializing Rotation UI.
         let rotUI = this.transformUI.rotation;
@@ -110,6 +135,10 @@ export class GUIManager{
         rotUI.y._managedInput = 'y';
         rotUI.z._managedInput = 'z';
 
+        rotUI.x._isFocused = false;
+        rotUI.y._isFocused = false;
+        rotUI.z._isFocused = false;
+
         rotUI.x.onBeforeKeyAddObservable.add(GUIManager.BindInput_OnlyAcceptNumbers);
         rotUI.y.onBeforeKeyAddObservable.add(GUIManager.BindInput_OnlyAcceptNumbers);
         rotUI.z.onBeforeKeyAddObservable.add(GUIManager.BindInput_OnlyAcceptNumbers);
@@ -118,6 +147,14 @@ export class GUIManager{
         rotUI.y.onTextChangedObservable.add(this.UpdatePickedObjectRotation);
         rotUI.z.onTextChangedObservable.add(this.UpdatePickedObjectRotation);
         
+        rotUI.x.onFocusObservable.add(this.MarkTextInputFocused);
+        rotUI.y.onFocusObservable.add(this.MarkTextInputFocused);
+        rotUI.z.onFocusObservable.add(this.MarkTextInputFocused);
+
+        rotUI.x.onBlurObservable.add(this.MarkTextInputBlurred);
+        rotUI.y.onBlurObservable.add(this.MarkTextInputBlurred);
+        rotUI.z.onBlurObservable.add(this.MarkTextInputBlurred);
+
         //Initializing Scale UI.
         let scaleUI = this.transformUI.scale;
         scaleUI.x = advTexture.getControlByName("transform_scale_x");
@@ -128,6 +165,10 @@ export class GUIManager{
         scaleUI.y._managedInput = 'y';
         scaleUI.z._managedInput = 'z';
 
+        scaleUI.x._isFocused = false;
+        scaleUI.y._isFocused = false;
+        scaleUI.z._isFocused = false;
+
         scaleUI.x.onBeforeKeyAddObservable.add(GUIManager.BindInput_OnlyAcceptNumbers);
         scaleUI.y.onBeforeKeyAddObservable.add(GUIManager.BindInput_OnlyAcceptNumbers);
         scaleUI.z.onBeforeKeyAddObservable.add(GUIManager.BindInput_OnlyAcceptNumbers);
@@ -135,6 +176,14 @@ export class GUIManager{
         scaleUI.x.onTextChangedObservable.add(this.UpdatePickedObjectScale);
         scaleUI.y.onTextChangedObservable.add(this.UpdatePickedObjectScale);
         scaleUI.z.onTextChangedObservable.add(this.UpdatePickedObjectScale);
+
+        scaleUI.x.onFocusObservable.add(this.MarkTextInputFocused);
+        scaleUI.y.onFocusObservable.add(this.MarkTextInputFocused);
+        scaleUI.z.onFocusObservable.add(this.MarkTextInputFocused);
+
+        scaleUI.x.onBlurObservable.add(this.MarkTextInputBlurred);
+        scaleUI.y.onBlurObservable.add(this.MarkTextInputBlurred);
+        scaleUI.z.onBlurObservable.add(this.MarkTextInputBlurred);
     }
 
     async InitializeGUI(){
@@ -156,17 +205,17 @@ export class GUIManager{
         let rotUI = _sGuiManager.transformUI.rotation;
         let scaleUI = _sGuiManager.transformUI.scale;
 
-        posUI.x.text = parseFloat(picked.position.x).toFixed(2);
-        posUI.y.text = parseFloat(picked.position.y).toFixed(2);
-        posUI.z.text = parseFloat(picked.position.z).toFixed(2);
+        if(!posUI.x._isFocused) posUI.x.text = parseFloat(picked.position.x).toFixed(2);
+        if(!posUI.y._isFocused) posUI.y.text = parseFloat(picked.position.y).toFixed(2);
+        if(!posUI.z._isFocused) posUI.z.text = parseFloat(picked.position.z).toFixed(2);
 
-        rotUI.x.text = parseFloat(Math_Utilities.radians_to_degrees(picked.rotation.x)).toFixed(2);
-        rotUI.y.text = parseFloat(Math_Utilities.radians_to_degrees(picked.rotation.y)).toFixed(2);
-        rotUI.z.text = parseFloat(Math_Utilities.radians_to_degrees(picked.rotation.z)).toFixed(2);
+        if(!rotUI.x._isFocused) rotUI.x.text = parseFloat(Math_Utilities.radians_to_degrees(picked.rotation.x)).toFixed(2);
+        if(!rotUI.y._isFocused) rotUI.y.text = parseFloat(Math_Utilities.radians_to_degrees(picked.rotation.y)).toFixed(2);
+        if(!rotUI.z._isFocused) rotUI.z.text = parseFloat(Math_Utilities.radians_to_degrees(picked.rotation.z)).toFixed(2);
 
-        scaleUI.x.text = parseFloat(picked.scaling.x).toFixed(2);
-        scaleUI.y.text = parseFloat(picked.scaling.y).toFixed(2);
-        scaleUI.z.text = parseFloat(picked.scaling.z).toFixed(2);
+        if(!scaleUI.x._isFocused) scaleUI.x.text = parseFloat(picked.scaling.x).toFixed(2);
+        if(!scaleUI.y._isFocused) scaleUI.y.text = parseFloat(picked.scaling.y).toFixed(2);
+        if(!scaleUI.z._isFocused) scaleUI.z.text = parseFloat(picked.scaling.z).toFixed(2);
     }
 
     AssignPickedObject(obj){
