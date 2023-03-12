@@ -1,4 +1,5 @@
 import {Mesh, PointerEventTypes, GizmoManager, SceneLoader, Engine, Tools, Vector3} from "@babylonjs/core";
+import { Math_Utilities } from "../utils/Math";
 import {AdvancedDynamicTexture} from '@babylonjs/gui';
 
 //Properties x y and z are intended as references to input fields in babylon GUI
@@ -46,6 +47,7 @@ export class GUIManager{
                 case 'x': _sGuiManager.pickedObject.position.x = posUI.x.text; break;
                 case 'y': _sGuiManager.pickedObject.position.y = posUI.y.text; break;
                 case 'z': _sGuiManager.pickedObject.position.z = posUI.z.text; break;
+                default: console.warn("UpdatePickedObjectPosition Expected x,y, or z. Received: " + input._managedInput);
             }
         }
     }
@@ -55,9 +57,10 @@ export class GUIManager{
         {
             let rotUI = _sGuiManager.transformUI.rotation;
             switch(input._managedInput){
-                case 'x': _sGuiManager.pickedObject.rotation.x = rotUI.x.text; break;
-                case 'y': _sGuiManager.pickedObject.rotation.y = rotUI.y.text; break;
-                case 'z': _sGuiManager.pickedObject.rotation.z = rotUI.z.text; break;
+                case 'x': _sGuiManager.pickedObject.rotation.x = Math_Utilities.degrees_to_radians(rotUI.x.text); break;
+                case 'y': _sGuiManager.pickedObject.rotation.y = Math_Utilities.degrees_to_radians(rotUI.y.text); break;
+                case 'z': _sGuiManager.pickedObject.rotation.z = Math_Utilities.degrees_to_radians(rotUI.z.text); break;
+                default: console.warn("UpdatePickedObjectRotation Expected x,y, or z. Received: " + input._managedInput);
             }
         }
     }
@@ -67,9 +70,10 @@ export class GUIManager{
         {
             let scaleUI = _sGuiManager.transformUI.scale;
             switch(input._managedInput){
-                case 'x': _sGuiManager.pickedObject.scale.x = scaleUI.x.text; break;
-                case 'y': _sGuiManager.pickedObject.scale.y = scaleUI.y.text; break;
-                case 'z': _sGuiManager.pickedObject.scale.z = scaleUI.z.text; break;
+                case 'x': _sGuiManager.pickedObject.scaling.x = scaleUI.x.text; break;
+                case 'y': _sGuiManager.pickedObject.scaling.y = scaleUI.y.text; break;
+                case 'z': _sGuiManager.pickedObject.scaling.z = scaleUI.z.text; break;
+                default: console.warn("UpdatePickedObjectScale Expected x, y, or z. Received: " + input._managedInput);
             }
         }
     }
@@ -113,6 +117,7 @@ export class GUIManager{
         rotUI.x.onTextChangedObservable.add(this.UpdatePickedObjectRotation);
         rotUI.y.onTextChangedObservable.add(this.UpdatePickedObjectRotation);
         rotUI.z.onTextChangedObservable.add(this.UpdatePickedObjectRotation);
+        
         //Initializing Scale UI.
         let scaleUI = this.transformUI.scale;
         scaleUI.x = advTexture.getControlByName("transform_scale_x");
@@ -152,9 +157,9 @@ export class GUIManager{
         posUI.y.text = picked.position.y;
         posUI.z.text = picked.position.z;
 
-        rotUI.x.text = picked.rotation.x;
-        rotUI.y.text = picked.rotation.y;
-        rotUI.z.text = picked.rotation.z;
+        rotUI.x.text = Math_Utilities.radians_to_degrees(picked.rotation.x);
+        rotUI.y.text = Math_Utilities.radians_to_degrees(picked.rotation.y);
+        rotUI.z.text = Math_Utilities.radians_to_degrees(picked.rotation.z);
 
         scaleUI.x.text = picked.scaling.x;
         scaleUI.y.text = picked.scaling.y;

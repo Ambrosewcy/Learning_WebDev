@@ -94,8 +94,6 @@ const onSceneReady = async (scene) => {
         gizmoManager.scaleGizmoEnabled = false;
     }
     if(e.key == 'h'){
-      //advancedTexture.parseFromSnippetAsync("#PWXSII", false);
-      //advancedTexture.parseFromSnippetAsync("#N5TIWA", false);
       guiManager = new GUIManager();
       guiManager.InitializeGUI();
 
@@ -104,12 +102,6 @@ const onSceneReady = async (scene) => {
         {
           pickedMesh = pointInfo.pickInfo.pickedMesh;
           guiManager.AssignPickedObject(pickedMesh);
-    
-          //console.log("PickedMesh.position: ", pickedMesh.position)
-          //console.log("Direct Mesh Position: ", pickedMesh);
-          xPosInput.text = pickedMesh.position.x;
-          yPosInput.text = pickedMesh.position.y;
-          zPosInput.text = pickedMesh.position.z;
         }
       })
 
@@ -118,80 +110,6 @@ const onSceneReady = async (scene) => {
       }
   }
   }
-
-  xPosInput = new InputText();
-  xPosInput.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_CENTER;
-  xPosInput.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
-  xPosInput.height = "35px";
-  xPosInput.width = "70px";
-  xPosInput.fontSize = 20;
-  xPosInput.text = "0";
-  xPosInput.color = "white";
-  xPosInput.background = "gray";
-  xPosInput.paddingBottom = "10px";
-  xPosInput.left = "-90px";
-  
-  xPosInput.onBeforeKeyAddObservable.add((input) =>{
-    let key = input.currentKey;
-    if(isNaN(parseFloat(key)) && key !== "." && key !== "-"){
-      input.addKey = false;
-    }
-  })
-  xPosInput.onTextChangedObservable.add((input)=>{
-    if(pickedMesh == null){
-      return;
-    }
-    pickedMesh.position.x = xPosInput.text;
-  });
-
-  yPosInput = new InputText();
-  yPosInput.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_CENTER;
-  yPosInput.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
-  yPosInput.height = "35px";
-  yPosInput.width = "70px";
-  yPosInput.fontSize = 20;
-  yPosInput.text = "0";
-  yPosInput.color = "white";
-  yPosInput.background = "gray";
-  yPosInput.paddingBottom = "10px";
-  
-  yPosInput.onBeforeKeyAddObservable.add((input) =>{
-    let key = input.currentKey;
-    if(isNaN(parseFloat(key)) && key !== "." && key !== "-"){
-      input.addKey = false;
-    }
-  })
-  yPosInput.onTextChangedObservable.add((input)=>{
-    if(pickedMesh === null){
-      return;
-    }
-    pickedMesh.position.y = yPosInput.text;
-  });
-
-  zPosInput = new InputText();
-  zPosInput.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_CENTER;
-  zPosInput.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
-  zPosInput.height = "35px";
-  zPosInput.width = "70px";
-  zPosInput.fontSize = 20;
-  zPosInput.text = "0";
-  zPosInput.color = "white";
-  zPosInput.background = "gray";
-  zPosInput.paddingBottom = "10px";
-  zPosInput.left = "90px";
-  
-  zPosInput.onBeforeKeyAddObservable.add((input) =>{
-    let key = input.currentKey;
-    if(isNaN(parseFloat(key)) && key !== "." && key !== "-"){
-      input.addKey = false;
-    }
-  })
-  zPosInput.onTextChangedObservable.add((input)=>{
-    if(pickedMesh == null){
-      return;
-    }
-    pickedMesh.position.z = zPosInput.text;
-  });
 
   const createBoxButton = new Button("CreateBox", "Create Box");
   createBoxButton.text = "Create Box";
